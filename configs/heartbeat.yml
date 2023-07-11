@@ -1,0 +1,25 @@
+# https://www.elastic.co/guide/en/beats/heartbeat/current/configuration-heartbeat-options.html
+heartbeat.monitors:
+- type: http
+  id: app-health
+  name: App Health
+  service.name: ${SERVICE_NAME:russky-app-2022}
+  hosts: ["app:8000/health"]
+  check.response.status: [200]
+  schedule: '@every 5s'
+
+processors:
+- add_observer_metadata:
+    geo:
+      # Token describing this location
+    hosts: '${LOCATION:localhost}'
+
+output.elasticsearch:
+  hosts: '${ELASTICSEARCH_HOSTS:elk:9200}'
+  username: '${ELASTICSEARCH_USERNAME:}'
+  password: '${ELASTICSEARCH_PASSWORD:}'
+
+setup:
+  kibana:
+    host: "elk:5601"
+  ilm.overwrite: true

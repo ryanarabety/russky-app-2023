@@ -1,0 +1,14 @@
+fastapi[all]
+uvicorn
+requests
+mypy
+flake8
+black
+pytest
+isort
+unify
+pydantic~=1.9.0
+types-requests
+ecs-logging
+elastic-apm
+multiavatar
